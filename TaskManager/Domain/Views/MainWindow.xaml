@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TaskManager"
+        xmlns:local="clr-namespace:TaskManager" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="TaskManager" Height="600" Width="800">
     <Grid>
@@ -15,12 +15,22 @@
 
         <Grid Grid.Row="1">
             <StackPanel Orientation="Horizontal">
-                <Button Margin="240,10,10,10"
+
+                <TextBox Width="250"
+                         Height="40"
+                         Margin="8,0,0,0"
+                         FontSize="30"
+                         Name="NameTxtb">
+                    
+                </TextBox>
+                
+                <Button Margin="30,10,10,10"
                         Width="150"
                         Height="40"
                         Foreground="White"
                         Background="Black"
                         Content="CREATE"
+                        Command="{Binding CreateCommand}"
                         FontSize="20"
                         FontWeight="ExtraBlack">
                 </Button>
@@ -30,7 +40,18 @@
                         Foreground="White"
                         Background="Black"
                         Content="End Task"
+                        Command="{Binding EndCommand}"
                         FontSize="20"
+                        FontWeight="ExtraBlack">
+                </Button>
+                <Button Margin="10"
+                        Width="150"
+                        Height="40"
+                        Foreground="White"
+                        Background="Black"
+                        Content="Add to Blackbox"
+                        Command="{Binding AddToBlackBoxCommand}"
+                        FontSize="15"
                         FontWeight="ExtraBlack">
                 </Button>
             </StackPanel>
@@ -38,46 +59,58 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.4*"></ColumnDefinition>
+                <ColumnDefinition Width="1.5*"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
 
+
+            <Grid Grid.Column="1">
+
+
+                <ListView Background="Black" Foreground="White" FontSize="30" ItemsSource="{Binding AllBlackBoxProcesses}"></ListView>
+
+            </Grid>
+
             <Grid Grid.Column="0">
-                <ListView ItemsSource="{Binding AllProducts}"
+                <ListView ItemsSource="{Binding AllProcesses}"
+                          SelectedItem="{Binding SelectedProcess}"
                 Padding="9" Background="White" BorderBrush="Black" BorderThickness="5,0,5,5">
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectProcessCommand}" ></i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Id" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock FontSize="18" HorizontalAlignment="Center" Padding="5,2" Text="" ></TextBlock>
+                                        <TextBlock FontSize="18" HorizontalAlignment="Center" Padding="5,2" Text="{Binding Id}" ></TextBlock>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="ProcessName" Width="200">
+                            <GridViewColumn Header="ProcessName" Width="220">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock FontSize="18" HorizontalAlignment="Center" Padding="5,2" Text="{Binding Price}" ></TextBlock>
+                                        <TextBlock FontSize="18" HorizontalAlignment="Center" Padding="5,2" Text="{Binding ProcessName}" ></TextBlock>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Machine" Width="70">
+                            <GridViewColumn Header="Machine" Width="60">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" >
-                                            <TextBlock FontSize="18" Text="{Binding Discount}" ></TextBlock>
-                                            <TextBlock FontSize="18" Text="%" ></TextBlock>
+                                            <TextBlock FontSize="18" Text="{Binding MachineName}" ></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Handled" Width="80">
+                            <GridViewColumn Header="Handled" Width="60">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" >
-                                            <TextBlock FontSize="18" Text="{Binding Discount}" ></TextBlock>
-                                            <TextBlock FontSize="18" Text="%" ></TextBlock>
+                                            <TextBlock FontSize="18" Text="{Binding HandleCount}" ></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

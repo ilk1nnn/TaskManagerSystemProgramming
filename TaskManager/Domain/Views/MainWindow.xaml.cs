@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaskManager.Domain.ViewModels;
 
 namespace TaskManager
 {
@@ -23,6 +24,9 @@ namespace TaskManager
         public MainWindow()
         {
             InitializeComponent();
+            var vm = new MainViewModel();
+            vm.ProcessNameTxtb = NameTxtb;
+            this.DataContext = vm;
         }
     }
 }
